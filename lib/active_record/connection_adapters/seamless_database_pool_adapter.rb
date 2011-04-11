@@ -141,6 +141,9 @@ module ActiveRecord
       def initialize(connection, logger, master_connection, read_connections, pool_weights)
         super(connection, logger)
         
+        # patch to play nice with activerecord-import gem
+        @config = master_connection.instance_variable_get :@config
+        
         @master_connection = master_connection
         @read_connections = read_connections.dup.freeze
         
